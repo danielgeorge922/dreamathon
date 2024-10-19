@@ -7,23 +7,32 @@ function Navbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Function to scroll to the section with the given ID
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false); // Close menu after navigating on mobile
+    }
+  };
+
   return (
-    <nav className="bg-navy h-16 flex items-center justify-between px-4 md:px-10">
+    <nav className="bg-[#1A1A2E] h-16 sticky top-0 flex items-center justify-between px-4 md:px-10 text-white">
       {/* Logo */}
       <div className="flex items-center">
         <img 
-          src="https://media.licdn.com/dms/image/v2/C4E0BAQFkfh9Sz3NzAw/company-logo_200_200/company-logo_200_200/0/1668641229271?e=2147483647&v=beta&t=DEPYc9DlEhV_7LW3VFJMVr99r2AIBkzvJ28sYhlCb24" 
+          src="/DTElogo.png"  // Path to the image in the public folder
           alt="Logo"
           className="h-10"
         />
       </div>
 
       {/* Links for desktop */}
-      <ul className="hidden md:flex gap-4 text-white">
-        <li className="cursor-pointer">Home</li>
-        <li className="cursor-pointer">About</li>
-        <li className="cursor-pointer">Services</li>
-        <li className="cursor-pointer">Contact</li>
+      <ul className="hidden md:flex gap-8 text-white font-medium">
+        <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('hero-section')}>Heart Health</li>
+        <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('compare-bpm')}>Compare BPM</li>
+        <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('symptoms-signs')}>Symptoms</li>
+        <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('management-tips')}>Management Tips</li>
       </ul>
 
       {/* Toggle Button for Mobile */}
@@ -38,11 +47,11 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <ul className="absolute top-16 left-0 w-full bg-blue-400 text-white flex flex-col items-center space-y-4 py-4 md:hidden">
-          <li className="cursor-pointer">Home</li>
-          <li className="cursor-pointer">About</li>
-          <li className="cursor-pointer">Services</li>
-          <li className="cursor-pointer">Contact</li>
+        <ul className="absolute top-16 left-0 w-full bg-[#1A1A2E] text-white flex flex-col items-center space-y-4 py-4 md:hidden font-medium">
+          <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('hero-section')}>Heart Health</li>
+          <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('compare-bpm')}>Compare BPM</li>
+          <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('symptoms-signs')}>Symptoms</li>
+          <li className="cursor-pointer hover:text-[#6C63FF]" onClick={() => scrollToSection('management-tips')}>Management Tips</li>
         </ul>
       )}
     </nav>
