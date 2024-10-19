@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import { Slider } from '@mui/material'; // For the 3D heart drag bar
-import { SketchPicker } from 'react-color'; // For color picker
-import { createTheme, ThemeProvider } from '@mui/material/styles'; // MUI theme for custom styling
+import React, { useState, useEffect } from 'react';
+import { Slider } from '@mui/material';
+import { SketchPicker } from 'react-color';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// Custom theme to apply white tick marks and labels for the slider
 const theme = createTheme({
   components: {
     MuiSlider: {
       styleOverrides: {
         markLabel: {
-          color: '#fff', // Makes tick labels white
+          color: '#fff',
         },
       },
     },
@@ -18,61 +17,105 @@ const theme = createTheme({
 
 function Hero() {
   const [selectedTab, setSelectedTab] = useState('healthy');
-  const [bpm, setBpm] = useState(80); // Controlled BPM value
+  const [bpm, setBpm] = useState('--'); // Display '--' if no data is received
   const [color, setColor] = useState('#6C63FF'); // Default color for user's heart
-  const [heartScale, setHeartScale] = useState(1); // 3D heart modification slider value
 
-  const handleTabClick = (tab) => {
-    setSelectedTab(tab);
-  };
+  // Function to send BPM to the backend
+  const sendBpmToBackend = async (bpmValue) => {
+    try {
+      const response = await fetch('http://localhost:5000/send_pulse_data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bpm: bpmValue }), // Sending BPM value to the backend
+      });
 
-  // Scrolls smoothly to the hero section
-  const handleScrollToHero = () => {
-    const heroSection = document.getElementById('hero-section');
-    if (heroSection) {
-      heroSection.scrollIntoView({ behavior: 'smooth' });
+      const data = await response.json();
+      if (response.ok) {
+        console.log('BPM sent successfully:', data);
+      } else {
+        console.error('Failed to send BPM:', data);
+      }
+    } catch (error) {
+      console.error('Error sending BPM:', error);
     }
   };
 
-  // Handle slider change for BPM
+  // Function to handle BPM slider change
   const handleBpmChange = (event, newValue) => {
     setBpm(newValue);
+    sendBpmToBackend(newValue); // Send BPM to backend when slider changes
   };
 
-  // Handle color picker change
+  // Function to send LED color to the backend
+  const sendColorToBackend = async (rgb) => {
+    try {
+      const response = await fetch('http://localhost:5000/set_color', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ red: rgb.r, green: rgb.g, blue: rgb.b }), // Sending RGB values to the backend
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Color sent successfully:', data);
+      } else {
+        console.error('Failed to send color:', data);
+      }
+    } catch (error) {
+      console.error('Error sending color:', error);
+    }
+  };
+
+  // Function to handle color picker change
   const handleColorChange = (newColor) => {
     setColor(newColor.hex);
+    sendColorToBackend(newColor.rgb); // Send RGB to backend when color changes
   };
+
+  // Function to fetch BPM data from the backend
+  const fetchBpm = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/get_pulse_data');
+      const data = await response.json();
+
+      if (response.ok && data.bpm) {
+        setBpm(data.bpm);
+      } else {
+        setBpm('--'); // Show '--' if no valid BPM
+      }
+    } catch (error) {
+      console.error('Error fetching BPM:', error);
+      setBpm('--'); // Show '--' if there’s a problem fetching data
+    }
+  };
+
+  // UseEffect to fetch BPM every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchBpm();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         {/* Landing Page with video background */}
         <section className="relative flex flex-col items-center justify-center min-h-screen text-white">
-          {/* Video Background */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover z-0"
-          >
+          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
             <source src="/heart.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          {/* Dark overlay on the video */}
           <div className="absolute inset-0 bg-black opacity-50 z-1"></div>
 
-          {/* Content on top of the video */}
           <div className="relative z-10 text-center">
             <h1 className="text-5xl font-bold mb-6">Welcome to the Heart Health Comparison</h1>
             <p className="text-xl mb-8">Scroll down to learn more about healthy and unhealthy hearts</p>
-            <button
-              onClick={handleScrollToHero}
-              className="neon-button px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg"
-            >
-              Learn More
-            </button>
           </div>
         </section>
 
@@ -107,13 +150,19 @@ function Hero() {
             <div className="flex flex-col items-center justify-center mx-6">
               <div className="flex space-x-4">
                 <button
-                  onClick={() => handleTabClick('healthy')}
+                  onClick={() => {
+                    setSelectedTab('healthy');
+                    handleBpmChange(null, 80); // Send BPM for healthy heart
+                  }}
                   className={`px-4 py-2 border-b-2 ${selectedTab === 'healthy' ? 'border-[#6C63FF] text-[#6C63FF]' : 'border-gray-400 text-white'}`}
                 >
                   Healthy Heart
                 </button>
                 <button
-                  onClick={() => handleTabClick('chf')}
+                  onClick={() => {
+                    setSelectedTab('chf');
+                    handleBpmChange(null, 110); // Send BPM for CHF heart
+                  }}
                   className={`px-4 py-2 border-b-2 ${selectedTab === 'chf' ? 'border-[rgb(212,81,109)] text-[rgb(212,81,109)]' : 'border-gray-400 text-white'}`}
                 >
                   CHF Heart
@@ -152,13 +201,10 @@ function Hero() {
             <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md w-full md:w-1/2 mx-4">
               <h3 className="text-xl font-semibold">Your Heart Rate</h3>
               <div className="bg-gray-200 w-full p-4 rounded-lg text-center mt-4">
-                <p className="text-lg">BPM: {bpm}</p>
+                <p className="text-lg">BPM: {bpm}</p> {/* Display BPM fetched from backend */}
                 <p className="text-lg">Blood Pressure: --/--</p> {/* Placeholder for blood pressure */}
               </div>
-              <div
-                className={`mt-4 w-full h-16 rounded-lg animate-pulse`}
-                style={{ backgroundColor: color }}
-              />
+              <div className={`mt-4 w-full h-16 rounded-lg animate-pulse`} style={{ backgroundColor: color }} />
             </div>
 
             {/* Right: CHF Heart */}
@@ -173,14 +219,13 @@ function Hero() {
           </div>
         </section>
 
-        {/* Remaining Sections (Symptoms, Tips, etc.) */}
         {/* Modify BPM Section */}
         <section className="scroll-margin-top-16 py-12 bg-[#1A1A2E] text-white text-center">
           <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-6 text-black">Modify the BPM of Your Heart</h2>
             <p className="mb-6 text-black">Use the slider to control your heart's BPM:</p>
             <Slider
-              value={bpm}
+              value={bpm === '--' ? 80 : bpm} // Use default value if no BPM from backend
               min={50}
               max={150}
               step={1}
