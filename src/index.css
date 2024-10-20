@@ -27,4 +27,193 @@ body {
     transform: scale(1.1);
     box-shadow: 0 0 20px #33ccff, 0 0 30px #33ccff, 0 0 40px #33ccff;
   }
-  
+  /* Healthy Heart */
+.healthy-heart-text {
+  color: white; /* Main text color */
+  text-shadow: 0 0 10px rgba(173, 216, 230, 0.8), /* Light blue shadow */
+               0 0 20px rgba(0, 255, 255, 0.7), /* Cyan shadow */
+               0 0 30px rgba(0, 0, 255, 0.6); /* Blue shadow */
+  animation: glowingText 3s infinite;
+}
+
+/* Glowing effect around container for healthy heart */
+.healthy-heart-container {
+  box-shadow: 0 0 10px rgba(173, 216, 230, 0.8),
+              0 0 20px rgba(0, 255, 255, 0.7),
+              0 0 30px rgba(0, 0, 255, 0.6);
+}
+
+@keyframes glowingText {
+  0% {
+    text-shadow: 0 0 10px rgba(173, 216, 230, 0.8), 
+                 0 0 20px rgba(0, 255, 255, 0.7), 
+                 0 0 30px rgba(0, 0, 255, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(173, 216, 230, 1), 
+                 0 0 30px rgba(0, 255, 255, 0.9), 
+                 0 0 40px rgba(0, 0, 255, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(173, 216, 230, 0.8), 
+                 0 0 20px rgba(0, 255, 255, 0.7), 
+                 0 0 30px rgba(0, 0, 255, 0.6);
+  }
+}
+
+/* CHF Heart */
+.chf-heart-text {
+  color: white; /* Main text color */
+  text-shadow: 0 0 10px rgba(255, 99, 71, 0.8), /* Light red shadow */
+               0 0 20px rgba(255, 0, 0, 0.7), /* Red shadow */
+               0 0 30px rgba(139, 0, 0, 0.6); /* Dark red shadow */
+  animation: glowingRedText 3s infinite;
+}
+
+/* Glowing effect around container for CHF heart */
+.chf-heart-container {
+  box-shadow: 0 0 10px rgba(255, 99, 71, 0.8),
+              0 0 20px rgba(255, 0, 0, 0.7),
+              0 0 30px rgba(139, 0, 0, 0.6);
+}
+
+@keyframes glowingRedText {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 99, 71, 0.8), 
+                 0 0 20px rgba(255, 0, 0, 0.7), 
+                 0 0 30px rgba(139, 0, 0, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 99, 71, 1), 
+                 0 0 30px rgba(255, 0, 0, 0.9), 
+                 0 0 40px rgba(139, 0, 0, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(255, 99, 71, 0.8), 
+                 0 0 20px rgba(255, 0, 0, 0.7), 
+                 0 0 30px rgba(139, 0, 0, 0.6);
+  }
+}
+
+
+/* General hover and glow for components */
+.component-container {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.component-container:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3); /* Subtle border glow */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Glowing shadow on hover */
+}
+
+/* For Healthy Heart Bullet Points Section */
+.healthy-heart-bullet-points {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.healthy-heart-bullet-points:hover {
+  transform: scale(1.05);
+  border-color: rgba(173, 216, 230, 0.5); /* Light blue border on hover */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 
+              0 0 30px rgba(0, 0, 255, 0.6); /* Blue glow */
+}
+
+/* For CHF Heart Bullet Points Section */
+.chf-heart-bullet-points {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.chf-heart-bullet-points:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 99, 71, 0.5); /* Light red border on hover */
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.7), 
+              0 0 30px rgba(139, 0, 0, 0.6); /* Red glow */
+}
+
+/* Personalized Health Benefits Section */
+.personalized-health-container {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.personalized-health-container:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3); /* White border on hover */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* White glow */
+}
+
+/* Mitigation Tips Section */
+.mitigation-tips-container {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.mitigation-tips-container:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3); /* White border on hover */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* White glow */
+}
+
+/* Modify BPM and Choose Heart Color Sections */
+.bpm-slider-container, .color-picker-container {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.bpm-slider-container:hover, .color-picker-container:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3); /* White border on hover */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* White glow */
+}
+/* Additional Styles for Interaction and Borders */
+.card-container {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Style for significant text (e.g., numbers like 110 BPM) */
+.important-number {
+  color: #ff4f4f;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.carousel-tip {
+  position: relative;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+button {
+  transition: transform 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.2);
+}
+
+.component-container {
+  transition: all 0.5s ease;
+}
+
+.component-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 0, 255, 0.4);
+}
