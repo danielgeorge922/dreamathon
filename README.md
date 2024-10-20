@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+# Heart Health Educational Aid - CHF & BPM Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is an educational web-based application designed to teach users about the dangers of Congestive Heart Failure (CHF) and how it affects heart health. The app visualizes the heart's BPM (Beats Per Minute) with a comparison between a healthy heart and one with CHF. Users can modify the BPM using a slider and change the heart's color to visualize different heart conditions. Additionally, LED lights can reflect the BPM and color selections via a hardware integration using an Arduino.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Heart Health Comparison**: Visual comparison of a healthy heart and a heart affected by CHF, including visual indicators of blood pressure and BPM.
+- **Customizable Heart BPM**: Users can control their heart's BPM using a slider and compare it to CHF symptoms.
+- **LED Color Control**: Users can change the heart's color, which is then reflected in the LED hardware.
+- **Personalized Insights**: The app provides tips based on the selected BPM and suggests ways to maintain heart health or mitigate CHF symptoms.
+- **Responsive Design**: The app is fully responsive, with a smooth UI experience across devices.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technology Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend**: 
+  - React.js
+  - Material UI for sliders
+  - React-Color for color picker
+  - FontAwesome icons for better UI representation
+  - Chart.js for visual trends
+- **Backend**: 
+  - Flask (Python) to handle BPM and LED color data.
+  - Arduino integration using ESP8266 for hardware control.
+  
+## Prerequisites
 
-### `npm test`
+Before running the project, ensure you have the following installed:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Node.js** and **npm** (for frontend development)
+- **Python** and **Flask** (for backend development)
+- **Arduino IDE** or **PlatformIO** (for the ESP8266 and LED integration)
+- **PostgreSQL** (if a database is used)
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   git clone https://github.com/your-repo/dreamathon.git
+   cd dreamathon
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install Backend Dependencies**:
 
-### `npm run eject`
+   Navigate to the `api` folder and install the necessary Python packages:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```bash
+   cd api
+   pip install -r requirements.txt
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Install Frontend Dependencies**:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   Navigate to the root folder and install the required npm packages:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+4. **Install Arduino Dependencies**:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   Make sure you have the necessary libraries for your Arduino/ESP8266 setup (e.g., `ESP8266WiFi.h`). Upload the `pulse_sensor.ino` file to your ESP8266.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Usage
 
-### Code Splitting
+1. **Start the Backend (Flask API)**:
+   
+   From the `api` folder, run the Flask app:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+   flask run
+   ```
 
-### Analyzing the Bundle Size
+2. **Start the Frontend (React App)**:
+   
+   From the root folder, start the React app:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   ```bash
+   npm start
+   ```
 
-### Making a Progressive Web App
+3. **Hardware Setup**:
+   
+   Ensure the Arduino is connected and running the `pulse_sensor.ino` code. The ESP8266 will communicate with the backend to update the BPM and LED color based on user input.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+4. **View the Application**:
 
-### Advanced Configuration
+   Once both the frontend and backend are running, open the browser and visit:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+   ```
+   http://localhost:3000
+   ```
 
-### Deployment
+   You can now interact with the heart BPM slider, color picker, and see real-time updates reflected on the website and LED hardware.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## API Endpoints
 
-### `npm run build` fails to minify
+The backend Flask server exposes the following endpoints:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `POST /send_pulse_data`: Accepts BPM data from the frontend or Arduino.
+- `GET /get_pulse_data`: Returns the current BPM data.
+- `POST /set_color`: Accepts RGB values to set the color of the LED.
+
+## Arduino Integration
+
+- **ESP8266 Module**: This project uses the ESP8266 to communicate with the backend server and update the BPM and LED color based on user input.
+- **Pulse Sensor**: The `pulse_sensor.ino` script runs on the ESP8266 to collect BPM data and send it to the backend.
+
+## Contribution
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Create a pull request.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
