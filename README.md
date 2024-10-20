@@ -1,6 +1,7 @@
-# Heart Health Educational Aid - CHF & BPM Visualizer
+# Heart Health Educational Aid - CHF & BPM Visualizer 
 
-## Overview
+## Overview![image-removebg-preview](https://github.com/user-attachments/assets/6c9b0c89-14fa-4c18-a20e-dc8405de71ec)
+
 
 This project is an educational web-based application designed to teach users about the dangers of Congestive Heart Failure (CHF) and how it affects heart health. The app visualizes the heart's BPM (Beats Per Minute) with a comparison between a healthy heart and one with CHF. Users can modify the BPM using a slider and change the heart's color to visualize different heart conditions. Additionally, LED lights can reflect the BPM and color selections via a hardware integration using an Arduino.
 
